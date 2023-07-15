@@ -28,6 +28,10 @@ packer.startup(function(use)
 
     use('nvim-treesitter/nvim-treesitter-context')
 
+    use('windwp/nvim-ts-autotag')
+
+    use('windwp/nvim-autopairs')
+
     use('theprimeagen/harpoon')
 
     use('mbbill/undotree')
