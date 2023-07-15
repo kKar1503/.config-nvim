@@ -1,3 +1,4 @@
 require("kar.remap")
 require("kar.set")
-require('colorbuddy').colorscheme('cobalt2')
+require("kar.highlights")
+require("kar.packer")
