@@ -1,81 +1,74 @@
 local status, packer = pcall(require, "packer")
 if (not status) then
-    print("Packer is not installed")
-    return
+  print("Packer is not installed")
+  return
 end
 
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
 packer.startup(function(use)
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+  -- Packer can manage itself
+  use 'wbthomason/packer.nvim'
 
-    use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.2',
-        -- or                            , branch = '0.1.x',
-        requires = { { 'nvim-lua/plenary.nvim' } }
+  -- Navigations
+  use('theprimeagen/harpoon')
+  use {
+    'nvim-telescope/telescope.nvim', tag = '0.1.2',
+    -- or                            , branch = '0.1.x',
+    requires = { { 'nvim-lua/plenary.nvim' } }
+  }
+
+  -- Git
+  use('tpope/vim-fugitive')
+  use('lewis6991/gitsigns.nvim')
+
+  -- Appearance
+  use('nvim-lualine/lualine.nvim')
+  use('onsails/lspkind-nvim')
+  use('kyazdani42/nvim-web-devicons')
+  use('norcalli/nvim-colorizer.lua')
+  use('akinsho/nvim-bufferline.lua')
+  use {
+    'svrana/neosolarized.nvim',
+    requires = { 'tjdevries/colorbuddy.nvim' }
+  }
+
+  -- Treesitter
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+  }
+  use('nvim-treesitter/nvim-treesitter-context')
+  use('windwp/nvim-ts-autotag')
+  use('windwp/nvim-autopairs')
+
+  -- LSP
+  use('jose-elias-alvarez/null-ls.nvim')
+  use('williamboman/mason.nvim')
+  use('williamboman/mason-lspconfig.nvim')
+  use('hrsh7th/cmp-nvim-lsp')
+  use('hrsh7th/cmp-buffer')
+  use('hrsh7th/nvim-cmp')
+  use('neovim/nvim-lspconfig')
+  use('glepnir/lspsaga.nvim')
+
+  -- Luasnip
+  use('L3MON4D3/LuaSnip')
+
+  -- Comments
+  use { 'numToStr/Comment.nvim',
+    requires = {
+      'JoosepAlviste/nvim-ts-context-commentstring'
     }
+  }
 
-    use {
-        'svrana/neosolarized.nvim',
-        requires = { 'tjdevries/colorbuddy.nvim' }
-    }
+  -- Formatter
+  use('MunifTanjim/prettier.nvim')
 
-    use('nvim-lualine/lualine.nvim')
+  -- Undo tree
+  use('mbbill/undotree')
 
-    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
-
-    use('nvim-treesitter/nvim-treesitter-context')
-
-    use('windwp/nvim-ts-autotag')
-
-    use('windwp/nvim-autopairs')
-
-    use('theprimeagen/harpoon')
-
-    use('mbbill/undotree')
-
-    use('tpope/vim-fugitive')
-
-    use {
-        'prettier/vim-prettier',
-        run = 'pnpm install',
-        ft = {
-            'javascript',
-            'typescript',
-            'css',
-            'less',
-            'scss',
-            'graphql',
-            'markdown',
-            'vue',
-            'html',
-        }
-    }
-
-    use {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
-        requires = {
-            -- LSP Support
-            { 'neovim/nvim-lspconfig' },
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' },
-
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-buffer' },
-            { 'hrsh7th/cmp-path' },
-            { 'saadparwaiz1/cmp_luasnip' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'hrsh7th/cmp-nvim-lua' },
-
-            -- Snippets
-            { 'L3MON4D3/LuaSnip' },
-            { 'rafamadriz/friendly-snippets' },
-        }
-    }
-
-    use('ThePrimeagen/vim-be-good')
+  -- Vim be good cause I need to learn bruh
+  use('ThePrimeagen/vim-be-good')
 end)
