@@ -67,9 +67,33 @@ protocol.CompletionItemKind = {
 -- Set up completion using nvim_cmp with LSP source
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+local util = require "lspconfig/util"
+
 nvim_lsp.flow.setup {
   on_attach = on_attach,
   capabilities = capabilities
+}
+
+nvim_lsp.rust_analyzer.setup {
+  on_attach = on_attach,
+  capabilities = capabilities
+}
+
+nvim_lsp.gopls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  cmd = { "gopls" },
+  filetypes = { "go", "gomod", "gowork", "gotmpl" },
+  root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+  settings = {
+    gopls = {
+      completeUnimported = true,
+      usePlaceholders = true,
+      analyses = {
+        unusedParams = true,
+      }
+    }
+  }
 }
 
 nvim_lsp.tsserver.setup {
@@ -106,6 +130,8 @@ nvim_lsp.lua_ls.setup {
   },
 }
 
+nvim_lsp.sqlls.setup {}
+
 nvim_lsp.tailwindcss.setup {
   on_attach = on_attach,
   capabilities = capabilities
@@ -123,11 +149,11 @@ nvim_lsp.astro.setup {
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
-  underline = true,
-  update_in_insert = false,
-  virtual_text = { spacing = 4, prefix = "●" },
-  severity_sort = true,
-}
+    underline = true,
+    update_in_insert = false,
+    virtual_text = { spacing = 4, prefix = "●" },
+    severity_sort = true,
+  }
 )
 
 -- Diagnostic symbols in the sign column (gutter)
